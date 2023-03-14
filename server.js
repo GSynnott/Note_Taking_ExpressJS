@@ -21,6 +21,21 @@ app.get('/', (req, res) =>
 // GET Route for notes page
 app.get('/api/notes', (req, res) => res.json(petData));
 
+// GET Route for notes page
+app.post('/api/notes', (req, res) => {
+
+  const obj1 = JSON.parse(petData);
+  const obj2 = JSON.parse(req);
+   
+  const mergedObject = {
+    ...obj1,
+    ...obj2
+  };
+   
+  // console.log(JSON.stringify(mergedObject))
+  res.json(mergedObject);
+});
+
 app.listen(PORT, () =>
   console.log(`App listening at http://localhost:${PORT} 🚀`)
 );
