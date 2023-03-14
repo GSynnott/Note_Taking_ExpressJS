@@ -1,18 +1,15 @@
 const express = require('express');
 const path = require('path');
 const { clog } = require('./middleware/clog');
-const api = require('./public/assets/js/index');
-//const cors = require('cors');
+const petData = require('./db/db.json');
 const PORT = process.env.PORT || 3001;
 
 const app = express();
 
 // Middleware for parsing JSON and urlencoded form data
-//app.use(cors());
 app.use(clog);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use('/api', api);
 
 app.use(express.static('public'));
 
@@ -21,10 +18,8 @@ app.get('/', (req, res) =>
   res.sendFile(path.join(__dirname, '/public/index.html'))
 );
 
-// GET Route for feedback page
-// app.get('/feedback', (req, res) =>
-//   res.sendFile(path.join(__dirname, '/public/pages/feedback.html'))
-// );
+// GET Route for notes page
+app.get('/api/notes', (req, res) => res.json(petData));
 
 app.listen(PORT, () =>
   console.log(`App listening at http://localhost:${PORT} 🚀`)
